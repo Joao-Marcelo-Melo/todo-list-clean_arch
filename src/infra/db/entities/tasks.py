@@ -5,6 +5,7 @@ class Tasks(Base):
     __tablename__ = 'tasks'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     status = Column(Boolean, nullable=False)
 
