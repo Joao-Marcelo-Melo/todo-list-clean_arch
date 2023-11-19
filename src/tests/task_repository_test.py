@@ -34,7 +34,7 @@ def test_insert_task():
 
 
 @pytest.mark.skip(reason="Sensive test")
-def test_select_task_by_id():
+def test_get_task_by_id():
     mocked_id = 3
     mocked_title = 'refactor code'
     mocked_description = 'refactor code to go into production'
@@ -54,4 +54,39 @@ def test_select_task_by_id():
     connection.execute(text(f'''
          DELETE FROM tasks WHERE id = {tasks[0].id}
      '''))
+    connection.commit()
+
+def test_get_all_tasks():
+    mocked_id_1 = 3
+    mocked_title_1 = 'refactor code'
+    mocked_description_1 = 'refactor code to go into production'
+    mocked_status_1 = False
+
+    mocked_id_2 = 7
+    mocked_title_2 = 'refactor code again'
+    mocked_description_2 = 'refactor code to go into production again'
+    mocked_status_2 = True
+
+    sql = '''
+    INSERT INTO tasks (id, title, description, status) 
+    VALUES 
+        ('{}', '{}', '{}', {}),
+        ('{}', '{}', '{}', {})
+    '''.format(
+    mocked_id_1, mocked_title_1, mocked_description_1, mocked_status_1,
+    mocked_id_2, mocked_title_2, mocked_description_2, mocked_status_2
+    )
+    connection.execute(text(sql))
+    connection.commit()
+
+    task_repository = TasksRepository()
+    tasks = task_repository.get_all_tasks()
+    print(tasks)
+
+    assert tasks[0].id == mocked_id_1
+    assert tasks[1].id == mocked_id_2
+
+    connection.execute(text(f'''
+    DELETE FROM tasks WHERE id = {tasks[0].id} OR id = {tasks[1].id}
+    '''))
     connection.commit()
