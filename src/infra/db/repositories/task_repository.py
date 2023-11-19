@@ -30,6 +30,7 @@ class TasksRepository(TaskRepositoryInterface):
                     database.session
                     .query(TasksEntity)
                     .filter(TasksEntity.id == task_id)
+                    .all()
                 )
                 return tasks
             except Exception as error:
