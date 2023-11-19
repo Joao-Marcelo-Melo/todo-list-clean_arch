@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class DbEnviroments(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env', case_sensitive=False)
-    user : str
+    db_user : str
     password : str
     host : str
     port : int
@@ -11,7 +11,7 @@ class DbEnviroments(BaseSettings):
 
 class SetDbEnviroments:
     def __init__(self, db_enviroments : Type[DbEnviroments]) -> None:
-        user = db_enviroments.user
+        user = db_enviroments.db_user
         password = db_enviroments.password
         host = db_enviroments.host
         port = db_enviroments.port
