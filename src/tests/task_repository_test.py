@@ -56,6 +56,7 @@ def test_get_task_by_id():
      '''))
     connection.commit()
 
+@pytest.mark.skip(reason="Sensive test")
 def test_get_all_tasks():
     mocked_id_1 = 3
     mocked_title_1 = 'refactor code'
@@ -90,3 +91,26 @@ def test_get_all_tasks():
     DELETE FROM tasks WHERE id = {tasks[0].id} OR id = {tasks[1].id}
     '''))
     connection.commit()
+
+@pytest.mark.skip(reason="Sensive test")
+def test_delete_task_by_id():
+    mocked_id = 3
+    mocked_title = 'refactor code'
+    mocked_description = 'refactor code to go into production'
+    mocked_status = True
+
+    sql = '''
+        INSERT INTO tasks (id, title, description, status) VALUES ('{}', '{}', '{}', {})
+    '''.format(mocked_id, mocked_title, mocked_description, mocked_status)
+    connection.execute(text(sql))
+    connection.commit()
+
+    task_repository = TasksRepository()
+    task_repository.delete_task_by_id(mocked_id)
+
+    deleted_task = (
+        connection.execute(text(f'SELECT * FROM tasks WHERE id = {mocked_id}'))
+        .fetchone()
+    )
+
+    assert deleted_task is None

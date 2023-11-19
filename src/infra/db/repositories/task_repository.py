@@ -30,7 +30,6 @@ class TasksRepository(TaskRepositoryInterface):
                     database.session
                     .query(TasksEntity)
                     .filter(TasksEntity.id == task_id)
-                    .all()
                 )
                 return tasks
             except Exception as error:
@@ -48,8 +47,22 @@ class TasksRepository(TaskRepositoryInterface):
                 )
                 return tasks
             except Exception as error:
+                database.session.rollback()
                 raise error
 
     @classmethod
-    def delete_task(cls, task_id : int) -> None:
-        raise NotImplementedError('nao implementado')
+    def delete_task_by_id(cls, task_id : int) -> None:
+        with DBConnectionHandler(GetDbEnviroments()) as database:
+            try:
+                task_to_delete = (
+                    database.session
+                    .query(TasksEntity)
+                    .filter(TasksEntity.id == task_id)
+                    .first()
+                )
+                if task_to_delete:
+                    database.session.delete(task_to_delete)
+                    database.session.commit()
+            except Exception as error:
+                database.session.rollback()
+                raise error
