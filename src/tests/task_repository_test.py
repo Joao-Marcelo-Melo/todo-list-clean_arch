@@ -31,3 +31,27 @@ def test_insert_task():
         DELETE FROM tasks WHERE id = {registry.id}
     '''))
     connection.commit()
+
+
+@pytest.mark.skip(reason="Sensive test")
+def test_select_task_by_id():
+    mocked_id = 3
+    mocked_title = 'refactor code'
+    mocked_description = 'refactor code to go into production'
+    mocked_status = False
+
+    sql = '''
+        INSERT INTO tasks (id, title, description, status) VALUES ('{}', '{}', '{}', {})
+    '''.format(mocked_id, mocked_title, mocked_description, mocked_status)
+    connection.execute(text(sql))
+    connection.commit()
+
+    task_repository = TasksRepository()
+    tasks = task_repository.get_task_by_id(mocked_id)
+
+    assert tasks[0].id == mocked_id
+
+    connection.execute(text(f'''
+         DELETE FROM tasks WHERE id = {tasks[0].id}
+     '''))
+    connection.commit()

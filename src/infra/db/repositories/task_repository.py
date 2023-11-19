@@ -24,7 +24,18 @@ class TasksRepository(TaskRepositoryInterface):
 
     @classmethod
     def get_task_by_id(cls, task_id : int) -> List[Task]:
-        raise NotImplementedError('nao implementado')
+        with DBConnectionHandler(GetDbEnviroments()) as database:
+            try:
+                tasks = (
+                    database.session
+                    .query(TasksEntity)
+                    .filter(TasksEntity.id == task_id)
+                    .all()
+                )
+                return tasks
+            except Exception as error:
+                database.session.rollback()
+                raise error
 
     @classmethod
     def get_all_tasks(cls) -> List[Task]:
