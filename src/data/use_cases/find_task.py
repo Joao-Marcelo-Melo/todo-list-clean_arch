@@ -13,7 +13,6 @@ class FindTask(FindTaskInterface):
         self.__validate_task(task_id)
         task = self.__search_task(task_id)
         response = self.__format_response(task)
-        print(response)
         return response
 
     @classmethod
@@ -35,4 +34,4 @@ class FindTask(FindTaskInterface):
             "description" : task.description,
             "status" : task.status
         }
-        return response
+        return f'task found successfully: {response}'
