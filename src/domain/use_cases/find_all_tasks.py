@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Dict
 
-class FindTask(ABC):
+class FindAllTaskInterface(ABC):
 
     @abstractmethod
-    def find(self) -> Dict:
+    def find_all(self) -> Dict:
         pass
