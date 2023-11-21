@@ -3,7 +3,7 @@ from sqlalchemy import text
 
 from src.infra.db.repositories.task_repository import TasksRepository
 from src.infra.db.settings.connection import DBConnectionHandler
-from src.infra.env.env_config import GetDbEnviroments
+from src.infra.db.settings.env_config import GetDbEnviroments
 
 db_connection_handler = DBConnectionHandler(GetDbEnviroments())
 connection = db_connection_handler.get_engine().connect()

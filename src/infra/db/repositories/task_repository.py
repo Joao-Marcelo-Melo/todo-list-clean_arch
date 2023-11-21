@@ -3,7 +3,7 @@ from src.infra.db.settings.connection import DBConnectionHandler
 from src.infra.db.entities.tasks import Tasks as TasksEntity
 from src.data.interfaces.task_repository import TaskRepositoryInterface
 from src.domain.models.task import Task
-from src.infra.env.env_config import GetDbEnviroments
+from src.infra.db.settings.env_config import GetDbEnviroments
 
 class TasksRepository(TaskRepositoryInterface):
 

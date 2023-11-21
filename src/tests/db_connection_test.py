@@ -1,6 +1,6 @@
 import pytest
 from src.infra.db.settings.connection import DBConnectionHandler
-from src.infra.env.env_config import GetDbEnviroments
+from src.infra.db.settings.env_config import GetDbEnviroments
 
 @pytest.mark.skip(reason="Sensive test")
 def test_create_database_engine():

@@ -2,7 +2,7 @@ from typing import Type
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from src.infra.env.env_config import GetDbEnviroments
+from src.infra.db.settings.env_config import GetDbEnviroments
 
 class DBConnectionHandler:
 
